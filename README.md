@@ -26,7 +26,7 @@ Typical use: from the directory you want to put the exported grav article direct
 zds-to-grav https://zestedesavoir.com/articles/42/le-point-sur-les-exoplanetes/
 ```
 
-See options in `--help` to specify explicit slug, article type, lang, or destination directory.
+See options in `--help` to specify explicit slug, article type, lang, or destination directory (numbered or not).
 
 ## Development & tests
 
