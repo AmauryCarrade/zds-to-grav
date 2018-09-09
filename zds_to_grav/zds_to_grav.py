@@ -22,9 +22,6 @@ from path import Path
 from slugify import UniqueSlugify
 
 
-__version__ = "1.0.0"
-
-
 @click.command()
 @click.option(
     "--template-name",
@@ -348,7 +345,7 @@ def download_and_replace_markdown_images(markdown_source, to):
         image_alt = match.group(1)
         image_url = match.group(2)
 
-        if not image_url.startswith("http://") and not image_url.startswith("https://"):
+        if not image_url.lower().startswith("http://") and not image_url.lower().startswith("https://"):
             if image_url.startswith("/"):
                 image_url = "https://zestedesavoir.com" + image_url
             else:
@@ -356,6 +353,7 @@ def download_and_replace_markdown_images(markdown_source, to):
                     f"Skipping image download for {image_url} (don't know where to fetch it).",
                     err=True,
                 )
+                return match.group(0)
 
         click.echo(f"Downloading and replacing image {image_alt} from {image_url}…")
 
@@ -381,9 +379,11 @@ def download_and_replace_markdown_images(markdown_source, to):
             with open(to / image_filename, "wb") as f:
                 shutil.copyfileobj(image, f, length=131072)
 
+        click.echo(downloaded_images)
+
         return f"![{image_alt}]({image_filename})"
 
-    return re_image.sub(repl_and_download_image, markdown_source, re.MULTILINE)
+    return re_image.sub(repl_and_download_image, markdown_source)
 
 
 def get_content(f):
