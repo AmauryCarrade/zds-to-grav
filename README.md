@@ -4,6 +4,8 @@ Converts an article or an opinion from [Zeste de Savoir](https://zestedesavoir.c
 
 Accepts either an URL to a ZdS article/optinion, or an exported archive.
 
+Note: the generated frontmatter includes some non-standard fields, as this was initially built for my own use and my theme uses them. Standard fields are covered. Authors are assumed to be a taxonomy.
+
 ## Installation
 
 Requires Python 3.6 or newer.

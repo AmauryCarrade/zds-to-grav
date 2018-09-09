@@ -21,7 +21,7 @@ setup(
         "pyyaml",
     ],
     include_package_data=True,
-    url="http://github.com/AmauryCarrade/zds_to_grav",
+    url="http://github.com/AmauryCarrade/zds-to-grav",
     classifiers=[
         "Environment :: Console",
         "Programming Language :: Python",
