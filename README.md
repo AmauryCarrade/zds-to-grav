@@ -14,7 +14,7 @@ Requires Python 3.6 or newer.
 (sudo) pip install zds_to_grav
 ```
 
-## Usage
+## Usage
 
 ```bash
 zds-to-grav --help
