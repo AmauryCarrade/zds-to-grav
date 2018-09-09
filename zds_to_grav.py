@@ -49,7 +49,7 @@ def zds_to_grav(zds_archive, template_name, lang, slug, to):
 
     The archive argument can either be a path to a downloaded archive or the URL
     to an article or an opinion on Zeste de Savoir. URL are preferred as it allows
-    to fetch metadata not contained in the archive (tags, categories, authors).
+    to fetch metadata not contained in the archive (tags, categories, authors, date).
     """
     try:
         tags = []
