@@ -101,7 +101,7 @@ def zds_to_grav(zds_archive, template_name, lang, slug, number, to):
             if download_links:
                 for dl_link in download_links:
                     download_link = dl_link.get("href")
-                    if download_link.endswith('.zip'):
+                    if download_link.endswith(".zip"):
                         break
 
             if not download_link:
@@ -411,14 +411,16 @@ def download_and_replace_markdown_images(markdown_source, to):
         else:
             # Filename: slug of the first sentence of the alt-text, limited to 20 words because of
             # the max path size.
-            image_filename = slugify(' '.join(image_alt.split('.')[0].split()[:20])) + image_ext
+            image_filename = (
+                slugify(" ".join(image_alt.split(".")[0].split()[:20])) + image_ext
+            )
             image_is_new = True
             downloaded_images[image_hash] = image_filename
 
         if image_is_new:
             image.seek(0)
             with open(to / image_filename, "wb") as f:
-                shutil.copyfileobj(image, f, length=131072)
+                shutil.copyfileobj(image, f, length=131_072)
 
         return f"![{image_alt}]({image_filename})"
 
