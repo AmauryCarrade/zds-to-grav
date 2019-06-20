@@ -93,11 +93,16 @@ def zds_to_grav(zds_archive, template_name, lang, slug, number, to):
 
             click.secho("→ Retrieving metadata…", fg="yellow")
 
-            download_link = zds_soup.find("aside", class_="sidebar")
-            if download_link:
-                download_link = download_link.find("a", class_="download")
-            if download_link:
-                download_link = download_link.get("href")
+            download_links = zds_soup.find("aside", class_="sidebar")
+            download_link = None
+
+            if download_links:
+                download_links = download_links.find_all("a", class_="download")
+            if download_links:
+                for dl_link in download_links:
+                    download_link = dl_link.get("href")
+                    if download_link.endswith('.zip'):
+                        break
 
             if not download_link:
                 click.secho(
@@ -361,12 +366,12 @@ def shift_markdown_headers(markdown_source):
 
 
 re_image = re.compile(r"!\[([^\]]+)\]\(([^\)]+)\)")
+slugify = UniqueSlugify(to_lower=True)
+
 downloaded_images = {}
 
 
 def download_and_replace_markdown_images(markdown_source, to):
-    slugify = UniqueSlugify(to_lower=True)
-
     def repl_and_download_image(match):
         image_alt = match.group(1)
         image_url = match.group(2)
@@ -404,7 +409,9 @@ def download_and_replace_markdown_images(markdown_source, to):
             image_filename = downloaded_images[image_hash]
             image_is_new = False
         else:
-            image_filename = slugify(image_alt) + image_ext
+            # Filename: slug of the first sentence of the alt-text, limited to 20 words because of
+            # the max path size.
+            image_filename = slugify(' '.join(image_alt.split('.')[0].split()[:20])) + image_ext
             image_is_new = True
             downloaded_images[image_hash] = image_filename
 
